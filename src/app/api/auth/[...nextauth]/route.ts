@@ -14,7 +14,7 @@ export const authOptions:AuthOptions = {
           async authorize(credentials, req) {
             if(!credentials) return null
 
-            const user = UserLogin(credentials.email,credentials.password)
+            const user = await UserLogin(credentials.email,credentials.password)
       
             if (user) {
               return user
@@ -25,7 +25,16 @@ export const authOptions:AuthOptions = {
           }
         })
       ],
-    session: {strategy:'jwt'}
+    session: {strategy:'jwt'},
+    callbacks:{
+      async jwt({token,user}){
+        return {...token,...user}
+      },
+      async session({session,token,user}){
+        session.user = token as any
+        return session
+      }
+    }
 }
 
 const handler = NextAuth(authOptions)

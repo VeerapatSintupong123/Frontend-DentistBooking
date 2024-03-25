@@ -24,7 +24,7 @@ export default async function Topmenu() {
       ) : (
         <div className="flex flex-row p-2 items-center space-x-4 mr-3">
           <Link href="/api/auth/signin">Sign-In</Link>
-          <Link href="/dentist">Register</Link>
+          <Link href="/register">Register</Link>
         </div>
       )}
     </div>

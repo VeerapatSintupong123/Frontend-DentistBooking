@@ -1,14 +1,17 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import GetUser from "@/libs/getUser";
 
-import { useSession } from "next-auth/react";
+export default async function App() {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user.token) return null;
 
-export default function App() {
-  const { data: session } = useSession();
+  const profile = await GetUser(session.user.token);
 
   return (
     <main>
       <h1 className="text-center p-5 mt-[50px]">
-        {session ? "Hello " + session : "No One Here"}
+        {profile ? "Hello " + profile.data.name : "Hello"}
       </h1>
     </main>
   );
