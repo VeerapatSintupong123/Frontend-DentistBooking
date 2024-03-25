@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,7 +11,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import GetUser from "@/libs/getUser";
 import GetDentist from "@/libs/getDentist";
 
+
 export default function DateTimeReserve() {
+  const [reserveDate, setReserveDate] = useState(null);
+  const [startTime, setStartTime] = useState<Dayjs | null>(
+    dayjs(`${new Date()}`)
+  );
+  const [endTime, setEndTime] = useState(null);
 
     const [reserveDate, setReserveDate] = useState(null)
     const [startTime, setStartTime] = useState<Dayjs | null>(dayjs(new Date()));
@@ -62,5 +68,5 @@ export default function DateTimeReserve() {
                 </button>
             </LocalizationProvider>
         </div>
-    );
+  );
 }
