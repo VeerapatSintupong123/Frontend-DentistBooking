@@ -1,23 +1,21 @@
 "use client";
 
 import { TextField, Button, Typography, Container, Grid } from "@mui/material";
-import { useState } from "react";
-import RegisterUser from "@/libs/registerUser";
+import { FormEvent } from "react";
 
-export default function Register() {
-  const [name, setName] = useState("");
-  const [tel, setTel] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-
-  const register = async () => {
-    try {
-      alert(name + " " + tel + " " + email + " " + pass);
-      const res = await RegisterUser(name, tel, email, pass);
-      console.log(res);
-    } catch (error) {
-      console.error("Registration failed:", error);
-    }
+export default async function Register() {
+  const register = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: formData.get("name"),
+        tel: formData.get("tel"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+      }),
+    });
   };
 
   return (
@@ -34,41 +32,16 @@ export default function Register() {
       <Typography variant="h4" align="center" gutterBottom>
         Register
       </Typography>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={register}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Name"
-              name="name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
+            <TextField fullWidth label="Name" name="name" />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Telephone"
-              name="tel"
-              value={tel}
-              onChange={(e) => {
-                setTel(e.target.value);
-              }}
-            />
+            <TextField fullWidth label="Telephone" name="tel" />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
+            <TextField fullWidth label="Email" name="email" type="email" />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -76,10 +49,6 @@ export default function Register() {
               label="Password"
               name="password"
               type="password"
-              value={pass}
-              onChange={(e) => {
-                setPass(e.target.value);
-              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -88,10 +57,6 @@ export default function Register() {
               fullWidth
               variant="contained"
               className="text-black"
-              onClick={(e) => {
-                e.preventDefault();
-                register();
-              }}
             >
               Register
             </Button>

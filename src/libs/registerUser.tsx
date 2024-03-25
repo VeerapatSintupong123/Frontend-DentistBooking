@@ -11,14 +11,13 @@ export default async function RegisterUser(
       name: name,
       telephone: tel,
       email: email,
-      role: "user",
       password: password,
+      role: "user",
     }),
   });
 
   if (!respone.ok) throw new Error("Failed to Register");
 
   const lastRes = await respone.json();
-  console.log(lastRes);
   return lastRes;
 }
