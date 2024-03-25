@@ -2,17 +2,24 @@
 
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DigitalClock } from "@mui/x-date-pickers/DigitalClock";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 export default function DateTimeReserve() {
-  const [reserveDate, setReserveDate] = useState(null);
+  const [reserveDate, setReserveDate] = useState<Dayjs | null>(null);
   const [startTime, setStartTime] = useState<Dayjs | null>(
-    dayjs(`${new Date()}`)
+    dayjs().tz("Asia/Shanghai")
   );
-  const [endTime, setEndTime] = useState(null);
+  const [endTime, setEndTime] = useState<Dayjs | null>(
+    dayjs().tz("Asia/Shanghai")
+  );
 
   return (
     <div
@@ -31,18 +38,24 @@ export default function DateTimeReserve() {
           <div className="border-white border-">
             <DigitalClock
               className="mx-1"
-              onChange={(NewValue) => {
-                setStartTime(NewValue);
-                alert(NewValue);
+              onChange={(newValue) => {
+                if (dayjs.isDayjs(newValue)) {
+                  setStartTime(newValue);
+                  alert(newValue.toString());
+                }
               }}
+              value={startTime}
             />
           </div>
 
           <DigitalClock
             className="mx-1"
-            onChange={(NewValue) => {
-              setEndTime(NewValue);
+            onChange={(newValue) => {
+              if (dayjs.isDayjs(newValue)) {
+                setEndTime(newValue);
+              }
             }}
+            value={endTime}
           />
         </div>
       </LocalizationProvider>
