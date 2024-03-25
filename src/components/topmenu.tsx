@@ -15,7 +15,7 @@ export default async function Topmenu() {
           </div>
         </Link>
         <Link href="/booking">Booking</Link>
-        <Link href="/dentist">Destist</Link>
+        <Link href="/dentist">Dentist</Link>
       </div>
       {session ? (
         <div className="flex flex-row p-2 items-center space-x-4 mr-3">
