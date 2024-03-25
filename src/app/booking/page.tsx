@@ -1,9 +1,6 @@
 import DateTimeReserve from "@/components/DateTimeReserve"
 
 export default function Booking() {
-  function dayjs(arg0: string) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <main>
