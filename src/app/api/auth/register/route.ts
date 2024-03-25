@@ -4,8 +4,8 @@ import { NextResponse } from 'next/server';
 export async function POST(req:Request){
     try{ 
         const {name,tel,email,password} = await req.json();
-        const res = await RegisterUser(name,tel,email,password);
+        await RegisterUser(name,tel,email,password);
+        return NextResponse.json({ message: 'success' });
     }
-    catch(e){return NextResponse.json({ message: 'unfinish' });}
-    return NextResponse.json({ message: 'success' });
+    catch(e){return NextResponse.json({ message: 'failed' });}
 }
