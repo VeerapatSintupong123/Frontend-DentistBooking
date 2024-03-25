@@ -1,13 +1,31 @@
 "use client";
 
-import { TextField, Button, Typography, Container, Grid } from "@mui/material";
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Grid,
+  Snackbar,
+} from "@mui/material";
 import { FormEvent } from "react";
 
-export default async function Register() {
+export default function Register() {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openFail, setOpenFail] = useState(false);
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+  const handleFailClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const register = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const response = await fetch("/api/auth/register", {
+    const regis = await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify({
         name: formData.get("name"),
@@ -16,6 +34,9 @@ export default async function Register() {
         password: formData.get("password"),
       }),
     });
+    const response = await regis.json();
+    if (response.message === "success") setOpenSnackbar(true);
+    if (response.message === "failed") setOpenFail(true);
   };
 
   return (
@@ -63,6 +84,19 @@ export default async function Register() {
           </Grid>
         </Grid>
       </form>
+      <small>if register be success, you must go sign-in on top right.</small>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Registration successful!"
+      />
+      <Snackbar
+        open={openFail}
+        autoHideDuration={6000}
+        onClose={handleFailClose}
+        message="Registration failed!"
+      />
     </Container>
   );
 }
