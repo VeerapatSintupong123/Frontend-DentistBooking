@@ -14,6 +14,7 @@ export default async function Topmenu() {
             <HomeIcon style={{ fontSize: 30, color: "white" }} />
           </div>
         </Link>
+        <Link href="/profile">Profile</Link>
         <Link href="/booking">Booking</Link>
         <Link href="/dentist">Dentist</Link>
       </div>
