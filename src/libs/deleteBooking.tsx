@@ -2,9 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function deleteBooking(
-  user: string,
-  dentistId: string,
-  bookDate: string,
   bookId: string,
 ) {
   const session = await getServerSession(authOptions);
@@ -21,9 +18,6 @@ export default async function deleteBooking(
         "Content-type": "application/json",
         authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        bookDate: bookDate,
-      }),
     }
   );
 

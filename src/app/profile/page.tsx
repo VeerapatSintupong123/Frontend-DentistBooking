@@ -4,6 +4,7 @@ import GetUser from "@/libs/getUser";
 import GetDentists from "@/libs/getDentist";
 import PaymentButton from "@/components/paymentButton";
 import Link from "next/link";
+import DeleteButton from "@/components/deleteButton";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);
@@ -116,24 +117,20 @@ export default async function Profile() {
                         </Link>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md">
-                          Delete
-                        </button>
+                        <DeleteButton bookingid={booking._id} />
                       </td>
                     </tr>
                   ) : (
                     <tr>
                       <td>
                         <Link href={`/booking/update/${booking._id}`}>
-                        <button className="px-4 py-2 bg-green-500 text-white rounded-md mr-2">
+                        <button className="px-4 py-2 bg-green-500 text-white rounded-md">
                           Update
                         </button>
                         </Link>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md" >
-                          Delete
-                        </button>
+                        <DeleteButton bookingid={booking._id} />
                       </td>
                     </tr>
                   )}
