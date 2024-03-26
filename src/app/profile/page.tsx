@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import GetUser from "@/libs/getUser";
 import GetDentists from "@/libs/getDentist";
+import Link from "next/link";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);
@@ -75,7 +76,7 @@ export default async function Profile() {
               }}
             >
               <h2 className="text-left text-xl font-semibold ml-2">
-                Booking {session.user.role === "user" ? "" : index}
+                Booking {session.user.role === "user" ? "" : index+1}
               </h2>
               <table className="table-auto border-separate border-spacing-2">
                 <tbody>
@@ -105,9 +106,11 @@ export default async function Profile() {
                         </button>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-green-500 text-white rounded-md">
-                          Update
-                        </button>
+                        <Link href={`/booking/update/${booking._id}`}>
+                          <button className="px-4 py-2 bg-green-500 text-white rounded-md">
+                            Update
+                          </button>
+                        </Link>
                       </td>
                       <td>
                         <button className="px-4 py-2 bg-red-500 text-white rounded-md ml-[-110px]">
@@ -118,12 +121,14 @@ export default async function Profile() {
                   ) : (
                     <tr>
                       <td>
+                        <Link href={`/booking/update/${booking._id}`}>
                         <button className="px-4 py-2 bg-green-500 text-white rounded-md mr-2">
                           Update
                         </button>
+                        </Link>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md">
+                        <button className="px-4 py-2 bg-red-500 text-white rounded-md" >
                           Delete
                         </button>
                       </td>
