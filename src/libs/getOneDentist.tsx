@@ -1,4 +1,4 @@
-export default async function GetDentists(id: string, token: string) {
+export default async function GetDentist(id: string, token: string) {
     const respone = await fetch(`http://localhost:5000/api/v1/dentists/${id}`, {
       method: "GET",
       headers: { authorization: `Bearer ${token}` },

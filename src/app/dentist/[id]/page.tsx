@@ -16,17 +16,21 @@ export default async function CarDetailPage({params} : {params:{id:string}}) {
 
     const dentist = await GetDentist(params.id, session.user.token);
 
-    console.log(dentist)
-
     return(
         <main className="text-center pt-[50px]">
-            <h1>{dentist.data.name}</h1>
-            <div className="flex flex-row my-5">
-                <Image src={'/img/Schwynn.jpg'}
+            <div className="flex flex-row my-5 item-center justify-center">
+                <Image src={`/img/${dentist.data.name}.jpg`}
                 alt='Dent Image'
                 width={0} height={0} sizes="100vw"
-                className="rounded-lg w-[30%]" />
-                <div className="tex-md mx-5">{dentist.name}</div>
+                className="rounded-lg w-auto h-[50vh]" />
+                <div className="text-xl mx-5 item-center">{dentist.name}</div>
+            </div>
+            <h1 className="text-6xl font-serif">Dr. {dentist.data.name}</h1>
+            <div className="text-3xl font-sans mt-[30px]">
+                Years of Experience: {dentist.data.yearsOfExperience} <br/>
+            </div>
+            <div className="text-3xl font-sans mt-[20px]">
+                Area of Expertise: {dentist.data.areaOfExpertise}
             </div>
         </main>
     )
