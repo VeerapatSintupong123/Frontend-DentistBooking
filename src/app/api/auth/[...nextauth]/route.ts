@@ -2,8 +2,6 @@ import NextAuth from "next-auth/next";
 import { AuthOptions } from "next-auth";
 import UserLogin from "@/libs/userLogin";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -40,5 +38,4 @@ export const authOptions: AuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };

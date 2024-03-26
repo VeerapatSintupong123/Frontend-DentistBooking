@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import GetUser from "@/libs/getUser";
 import GetDentists from "@/libs/getDentist";
+import PaymentButton from "@/components/paymentButton";
 import Link from "next/link";
 
 export default async function Profile() {
@@ -100,11 +101,13 @@ export default async function Profile() {
                 <tfoot>
                   {profile.data.role === "user" ? (
                     <tr>
-                      <td>
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-                          Checkout
-                        </button>
-                      </td>
+                      {booking.status === "unfinish" ? (
+                        <td>
+                          <PaymentButton bookingId={booking._id} />
+                        </td>
+                      ) : (
+                        ""
+                      )}
                       <td>
                         <Link href={`/booking/update/${booking._id}`}>
                           <button className="px-4 py-2 bg-green-500 text-white rounded-md">
@@ -113,7 +116,7 @@ export default async function Profile() {
                         </Link>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md ml-[-110px]">
+                        <button className="px-4 py-2 bg-red-500 text-white rounded-md">
                           Delete
                         </button>
                       </td>
