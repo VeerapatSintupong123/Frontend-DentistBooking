@@ -1,9 +1,9 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function InteractiveCard({ children, contentName }: { children: React.ReactNode, contentName: string }) {
-    function onCarSelected() {
-        window.location.href = `/dentists/${contentName}`; // Use window.location for client-side navigation
-    }
+    
+    const router =useRouter ()
 
     function onCardMouseAction(event: React.SyntheticEvent) {
         if (event.type === 'mouseover') {
@@ -16,8 +16,8 @@ export default function InteractiveCard({ children, contentName }: { children: R
     }
 
     return (
-        <div className='w-1/6 h-[400px] rounded-lg shadow-lg bg-white pb-[50px]'
-            onClick={onCarSelected}
+        <div className='w-full h-[400px] rounded-lg shadow-lg bg-white pb-[50px]'
+            onClick={(e)=>{e.stopPropagation(); router.push(`dentist/${contentName}`)}}
             onMouseOver={(e) => onCardMouseAction(e)}
             onMouseOut={(e) => onCardMouseAction(e)}>
             {children}
