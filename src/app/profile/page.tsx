@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import GetUser from "@/libs/getUser";
 import GetDentists from "@/libs/getDentist";
+import PaymentButton from "@/components/paymentButton";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);
@@ -99,18 +100,20 @@ export default async function Profile() {
                 <tfoot>
                   {profile.data.role === "user" ? (
                     <tr>
-                      <td>
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-                          Checkout
-                        </button>
-                      </td>
+                      {booking.status === "unfinish" ? (
+                        <td>
+                          <PaymentButton bookingId={booking._id} />
+                        </td>
+                      ) : (
+                        ""
+                      )}
                       <td>
                         <button className="px-4 py-2 bg-green-500 text-white rounded-md">
                           Update
                         </button>
                       </td>
                       <td>
-                        <button className="px-4 py-2 bg-red-500 text-white rounded-md ml-[-110px]">
+                        <button className="px-4 py-2 bg-red-500 text-white rounded-md">
                           Delete
                         </button>
                       </td>
