@@ -48,21 +48,33 @@ export default function Booking() {
       .format("YYYY-MM-DDTHH:mm:ss[Z]");
 
     try {
-      const response = await fetch("/api/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: session?.user.token,
-          dentistId: Dentist,
-          bookDate: Time,
-        }),
+      const profileResponse = await fetch("/api/getme", {
+        method: "GET",
       });
 
-      if (response.ok) {
-        setOpenSnackbar(true);
+      if (profileResponse.ok) {
+        const profileData = await profileResponse.json();
+        const userId = profileData._id;
+
+        const bookingResponse = await fetch("/api/booking", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: userId,
+            dentistId: Dentist,
+            bookDate: Time,
+          }),
+        });
+
+        if (bookingResponse.ok) {
+          setOpenSnackbar(true);
+        } else {
+          setOpenFail(true);
+        }
       } else {
+        console.error("Failed to fetch user data");
         setOpenFail(true);
       }
     } catch (error) {
